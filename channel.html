@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Channel Name</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>EPG Details</h1>
+    </div>
+    <iframe width="730" height="441" src="https://www.youtube.com/embed/II_m28Bm-iM" title="TV9 Telugu News LIVE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <script>
+        async function fetchData() {
+            const url = 'https://indian-tv-schedule.p.rapidapi.com/TodaySchedule?channel=V6%20News';
+            const options = {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': '14626e53dfmshc42792ea93e2cf3p139a26jsn109c8fd8f513',
+                    'X-RapidAPI-Host': 'indian-tv-schedule.p.rapidapi.com'
+                }
+            };
+
+            try {
+                const response = await fetch(url, options);
+                const result = await response.text();
+                console.log(result);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        // Call the async function to fetch data
+        fetchData();
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>

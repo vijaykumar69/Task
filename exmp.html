@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Channel EPG Information</title>
+</head>
+<body>
+    <!-- Channel listings with clickable elements -->
+    <div class="channel" data-channel-id="V6 News">V6 News</div>
+    <div class="channel" data-channel-id="V6 News">V6 News 2</div>
+    <!-- Add more channels as needed -->
+
+    <!-- Display area for EPG information -->
+    <div id="epg-information">
+        <!-- EPG information will be displayed here -->
+    </div>
+
+    <script>
+        const apiKey = '14626e53dfmshc42792ea93e2cf3p139a26jsn109c8fd8f513';
+        const apiUrl = 'https://indian-tv-schedule.p.rapidapi.com/TodaySchedule?channel=V6%20News'; // Replace with the actual API endpoint
+
+        // Function to fetch EPG data for a channel
+        function fetchEpgData(channelId) {
+            fetch(`${apiUrl}?channelId=${channelId}`, {
+                method: 'GET',
+                headers: {
+                    'X-RapidAPI-Key': apiKey,
+                },
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                // Process the EPG data and display it on your HTML page
+                updateEpgInformation(data);
+            })
+            .catch((error) => {
+                console.error('Error fetching EPG data:', error);
+            });
+        }
+
+        // Function to update the HTML page with EPG information
+        function updateEpgInformation(epgData) {
+            const epgInformation = document.getElementById('epg-information');
+            epgInformation.innerHTML = `
+                <h2>Current Program</h2>
+                <p>Program Name: ${epgData.programName}</p>
+                <p>Start Time: ${epgData.startTime}</p>
+                <p>End Time: ${epgData.endTime}</p>
+                <p>Description: ${epgData.description}</p>
+                <!-- Add more EPG information as needed -->
+            `;
+        }
+
+        // Add click event listeners to your channel elements
+        document.querySelectorAll('.channel').forEach((channelElement) => {
+            channelElement.addEventListener('click', (event) => {
+                const channelId = event.currentTarget.getAttribute('data-channel-id');
+                fetchEpgData(channelId);
+            });
+        });
+    </script>
+</body>
+</html>
